@@ -45,9 +45,10 @@ public class RegisterTest extends Base {
         page.locator("#input-telephone").fill(dataProp.getProperty("telePhone"));
         page.locator("#input-password").fill(dataProp.getProperty("password"));
         page.locator("#input-confirm").fill(dataProp.getProperty("confirmPassword"));
-        page.locator("[name='agree'']");
-        page.locator("//input[@type='submit']");
-        Assert.assertTrue(page.locator("#content").isVisible());
+        page.locator("[name='agree']").click();
+        page.locator("//input[@value='Continue']").click();
+        System.out.println("The user successfully Enter their details");
+        Assert.assertTrue(page.locator("//div[@id='content']//h1[text()='Your Account Has Been Created!']").isVisible());
         System.out.println("The User Register their Successfully");
     }
 
@@ -59,10 +60,10 @@ public class RegisterTest extends Base {
         page.locator("#input-telephone").fill(dataProp.getProperty("telePhone"));
         page.locator("#input-password").fill(dataProp.getProperty("password"));
         page.locator("#input-confirm").fill(dataProp.getProperty("confirmPassword"));
-        page.locator("['name=newsletter']");
-        page.locator("[name='agree'']");
-        page.locator("//input[@type='submit']");
-        Assert.assertTrue(page.locator("#content").isVisible());
+        page.locator("//input[@name='newsletter' and @value='1']").click();
+        page.locator("[name='agree']").click();
+        page.locator("//input[@type='submit']").click();
+        Assert.assertTrue(page.locator("//div[@id='content']//h1[text()='Your Account Has Been Created!']").isVisible());
         System.out.println("The User Register their Successfully");
     }
 
@@ -77,7 +78,45 @@ public class RegisterTest extends Base {
         Assert.assertTrue(page.locator("//div[text()='Password must be between 4 and 20 characters!']").isVisible());
     }
 
-    public void verifyRegisterAccountEnteringDifferentPassword(){
-        
+    @Test(priority = 4)
+    public void verifyRegisterAccountEnteringDifferentPassword() {
+        page.locator("#input-firstname").fill(dataProp.getProperty("firstName"));
+        page.locator("#input-lastname").fill(dataProp.getProperty("lastName"));
+        page.locator("#input-email").fill(Utilities.generateTimeStamp());
+        page.locator("#input-telephone").fill(dataProp.getProperty("telePhone"));
+        page.locator("#input-password").fill(dataProp.getProperty("password"));
+        page.locator("#input-confirm").fill(prop.getProperty("invalidPassword"));
+        page.locator("['name=newsletter']");
+        page.locator("[name='agree'']");
+        page.locator("//input[@type='submit']").click();
+        Assert.assertTrue(page.locator("//div[@class='text-danger']").isVisible());
+    }
+
+    @Test(priority = 5)
+    public void verifyRegisteringAnAccountExistingAccount() {
+        page.locator("#input-firstname").fill(dataProp.getProperty("firstName"));
+        page.locator("#input-lastname").fill(dataProp.getProperty("lastName"));
+        page.locator("#input-email").fill(prop.getProperty("validUserEmail"));
+        page.locator("#input-telephone").fill(dataProp.getProperty("telePhone"));
+        page.locator("#input-password").fill(dataProp.getProperty("password"));
+        page.locator("#input-confirm").fill(dataProp.getProperty("confirmPassword"));
+        page.locator("//input[@name='newsletter' and @value='1']").click();
+        page.locator("[name='agree']").click();
+        page.locator("//input[@type='submit']").click();
+        Assert.assertTrue(page.locator("//div[@class='alert alert-danger alert-dismissible']").isVisible());
+    }
+
+    @Test(priority = 6)
+    public void verifyRegisterAccountByUsingInvalidEmail() {
+        page.locator("#input-firstname").fill(dataProp.getProperty("firstName"));
+        page.locator("#input-lastname").fill(dataProp.getProperty("lastName"));
+        page.locator("#input-email").fill(prop.getProperty("invalidEmail"));
+        page.locator("#input-telephone").fill(dataProp.getProperty("telePhone"));
+        page.locator("#input-password").fill(dataProp.getProperty("password"));
+        page.locator("#input-confirm").fill(dataProp.getProperty("confirmPassword"));
+        page.locator("//input[@name='newsletter' and @value='1']").click();
+        page.locator("[name='agree']").click();
+        page.locator("//input[@type='submit']").click();
+        Assert.assertTrue(page.locator("//div[text()='E-Mail Address does not appear to be valid!']").isVisible());
     }
 }

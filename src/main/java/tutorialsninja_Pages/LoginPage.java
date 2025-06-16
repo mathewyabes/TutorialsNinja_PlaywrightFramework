@@ -43,14 +43,14 @@ public class LoginPage {
     }
 
     public void invalidLogin() {
-        page.locator("#input-email").fill(Utilities.generateTimeStamp());
+        page.locator("#input-email").fill(prop.getProperty("invalidEmail"));
         page.locator("#input-password").fill(prop.getProperty("invalidPassword"));
         page.locator("//input[@value='Login']").click();
         Assert.assertTrue(page.locator("//div[@class='alert alert-danger alert-dismissible']").isVisible());
     }
 
     public void invalidEmail() {
-        page.locator("#input-email").fill(Utilities.generateTimeStamp());
+        page.locator("#input-email").fill(prop.getProperty("invalidEmail"));
         page.locator("#input-password").fill(prop.getProperty("validPassword"));
         page.locator("//input[@value='Login']").click();
         Assert.assertTrue(page.locator("//div[@class='alert alert-danger alert-dismissible']").isVisible());
