@@ -43,30 +43,35 @@ public class LoginTest extends Base {
     public void loginWithValidCredentials() {
         loginPage = new LoginPage(page);
         loginPage.validLogin();
+        softAssert.assertAll();
     }
 
     @Test(priority = 2)
     public void loginWithInvalidCredentials() {
         loginPage = new LoginPage(page);
         loginPage.invalidLogin();
+        softAssert.assertAll();
     }
 
     @Test(priority = 3)
     public void verifyLoginWithInvalidEmailAddressAndValidPassword() {
         loginPage = new LoginPage(page);
         loginPage.invalidEmail();
+        softAssert.assertAll();
     }
 
     @Test(priority = 4)
     public void verifyLoginWithValidEmailAddressAndInvalidPassword() {
         loginPage = new LoginPage(page);
         loginPage.invalidPassword();
+        softAssert.assertAll();
     }
 
     @Test(priority = 5)
     public void verifyLoginWithoutEnteringTheCredentials() {
-       loginPage = new LoginPage(page);
-       loginPage.emptyField();
+        loginPage = new LoginPage(page);
+        loginPage.emptyField();
+        softAssert.assertAll();
     }
 
 }

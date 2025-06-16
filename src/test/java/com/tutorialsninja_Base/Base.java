@@ -1,14 +1,16 @@
 package com.tutorialsninja_Base;
 
+import org.testng.asserts.SoftAssert;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Properties;
 
 public class Base {
 
     public Properties prop;
     public Properties dataProp;
+    public SoftAssert softAssert = new SoftAssert();
 
     public Base() {
         prop = new Properties();
