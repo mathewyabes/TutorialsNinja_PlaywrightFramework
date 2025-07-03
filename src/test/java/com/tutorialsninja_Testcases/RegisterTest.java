@@ -19,7 +19,7 @@ public class RegisterTest extends Base {
     public Browser browser;
     public Page page;
     public HomePage homePage;
-    public RegisterPage registerPage =new RegisterPage(page);;
+    public RegisterPage registerPage;
 
 
     @BeforeMethod
