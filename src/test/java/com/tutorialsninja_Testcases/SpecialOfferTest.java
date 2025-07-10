@@ -39,36 +39,42 @@ public class SpecialOfferTest extends Base {
     public void navigateToTheSpecialOfferPage() {
         specialOfferPage = new SpecialOfferPage(page);
         specialOfferPage.verifyNavigateSpecialOffer();
+        softAssert.assertAll();
     }
 
     @Test(priority = 2)
     public void navigateToTheSiteMapPage() {
         specialOfferPage = new SpecialOfferPage(page);
         specialOfferPage.verifyNavigateSiteMap();
+        softAssert.assertAll();
     }
 
     @Test(priority = 3)
     public void VerifyTheProductDisplayedInListView() {
         specialOfferPage = new SpecialOfferPage(page);
         specialOfferPage.verifyListView();
+        softAssert.assertAll();
     }
 
     @Test(priority = 4)
     public void VerifyTheProductDisplayedInGridView() {
         specialOfferPage = new SpecialOfferPage(page);
         specialOfferPage.verifyGridView();
+        softAssert.assertAll();
     }
 
     @Test(priority = 5)
     public void VerifyProductComparePage() {
         specialOfferPage = new SpecialOfferPage(page);
         specialOfferPage.verifyProductCompare();
+        softAssert.assertAll();
     }
 
     @Test(priority = 6)
     public void verifyAddProductForComparison() {
         specialOfferPage = new SpecialOfferPage(page);
         specialOfferPage.verifyAddProduct();
+        softAssert.assertAll();
     }
 
 

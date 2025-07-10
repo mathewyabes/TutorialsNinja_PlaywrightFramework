@@ -4,7 +4,6 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -14,7 +13,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.net.http.WebSocket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -69,6 +67,7 @@ public class Listener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         System.out.println("Screenshot Taken");
+        extentTest.log(Status.FAIL,"test failed"+result.getThrowable());
         try {
             Object testClassInstance = result.getInstance();
             Field field = testClassInstance.getClass().getDeclaredField("page");
@@ -78,14 +77,17 @@ public class Listener implements ITestListener {
             e.printStackTrace();
         }
         if (page != null) {
-            String fileName = result.getName() + ".png";
-            Path path = Paths.get("screenshots", fileName);
+            String fileName = result.getName() + "_" + System.currentTimeMillis()+".png";
+            String dir = System.getProperty("user.dir") + File.separator + "screenshot";
+            Path path = Paths.get(dir,fileName);
+            String relativePath = "../screenshot/" + fileName;
             try {
                 Files.createDirectories(path.getParent());
+                page.screenshot(new Page.ScreenshotOptions().setPath(path).setFullPage(true));
+                extentTest.addScreenCaptureFromPath(relativePath);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            page.screenshot(new Page.ScreenshotOptions().setPath(path));
         } else {
             System.out.println("Screenshot not taken");
         }

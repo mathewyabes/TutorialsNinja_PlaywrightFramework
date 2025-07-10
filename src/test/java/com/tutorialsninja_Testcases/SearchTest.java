@@ -47,17 +47,20 @@ public class SearchTest extends Base {
     public void verifySearchExistingProductName() {
         searchPage = new SearchPage(page);
         searchPage.existingProduct();
+        softAssert.assertAll();
     }
 
     @Test(priority = 2)
     public void verifySearchNonExistingProductName() {
         searchPage = new SearchPage(page);
         searchPage.nonExistingProduct();
+        softAssert.assertAll();
     }
 
     @Test(priority = 3)
     public void verifySearchWithoutEnteringName() {
         searchPage = new SearchPage(page);
         searchPage.emptyField();
+        softAssert.assertAll();
     }
 }

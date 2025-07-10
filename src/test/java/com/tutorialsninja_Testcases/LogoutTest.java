@@ -46,6 +46,7 @@ public class LogoutTest extends Base {
         page.locator("(//a[text()='Logout'])[1]").click();
         Assert.assertTrue(page.url().contains("logout"));
         page.locator("text='Continue'").click();
+        softAssert.assertAll();
     }
 
     @Test(priority = 2)
@@ -57,6 +58,7 @@ public class LogoutTest extends Base {
         page.locator("(//a[text()='Logout'])[2]").click();
         Assert.assertTrue(page.url().contains("logout"));
         page.locator("text='Continue'").click();
+        softAssert.assertAll();
     }
 
 }

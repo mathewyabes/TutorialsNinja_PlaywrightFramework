@@ -49,6 +49,7 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.shoppingCartPage();
+        softAssert.assertAll();
     }
 
 
@@ -58,6 +59,7 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.navigateShoppingCartPageHeaderOption();
+        softAssert.assertAll();
     }
 
     @Test(priority = 3)
@@ -66,12 +68,14 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.navigateToTheSightMap();
+        softAssert.assertAll();
     }
 
     @Test(priority = 4)
     public void verifyTheCartWhenThereIsNoProductAdded() {
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.emptyCart();
+        softAssert.assertAll();
     }
 
     @Test(priority = 5)
@@ -80,6 +84,7 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.navigateToShoppingCartUsingCartBlock();
+        softAssert.assertAll();
     }
 
     @Test(priority = 6)
@@ -88,6 +93,7 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.weightOfProduct();
+        softAssert.assertAll();
     }
 
     @Test(priority = 7)
@@ -96,34 +102,25 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.invalidCoupon();
+        softAssert.assertAll();
     }
 
     @Test(priority = 8)
     public void verifyThePageWithoutEnterCouponCode() {
         searchPage = new SearchPage(page);
         searchPage.existingProduct();
-        page.click("//span[text()='Add to Cart']");
-        page.click("//a[text()='shopping cart']");
-        page.click("text=Use Coupon Code");
-        page.click("#button-coupon");
-        page.locator("//div[contains(@class, 'alert') and contains(., 'Please enter a coupon code')]").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shoppingCartPage = new ShoppingCartPage(page);
+        shoppingCartPage.withoutEnterCoupon();
+        softAssert.assertAll();
     }
 
     @Test(priority = 9)
     public void verifyClosingTheWarningMessageInTheShoppingCartPage() {
         searchPage = new SearchPage(page);
         searchPage.existingProduct();
-        page.click("//span[text()='Add to Cart']");
-        page.click("//a[text()='shopping cart']");
-        page.click("text=Use Coupon Code");
-        page.click("#button-coupon");
-        page.locator("//div[contains(@class, 'alert') and contains(., 'Please enter a coupon code')]").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        page.click("//button[@type='button' and @class='close']");
-        if (page.locator("//div[contains(@class, 'alert') and contains(., 'Please enter a coupon code')]").isVisible()) {
-            System.out.println("The error Message is not closed");
-        } else {
-            System.out.println("The error Message is closed");
-        }
+        shoppingCartPage = new ShoppingCartPage(page);
+        shoppingCartPage.closingTheWarningMessage();
+        softAssert.assertAll();
     }
 
     @Test(priority = 10)
@@ -132,15 +129,8 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.shoppingCartPage();
-        page.click("text=Estimate Shipping & Taxes ");
-        page.selectOption("#input-country", "99");
-        ;
-        page.selectOption("#input-zone", "1503");
-        page.locator("#input-postcode").fill("627853");
-        page.click("#button-quote");
-        page.click("//input[@name='shipping_method']");
-        page.click("#button-shipping");
-        page.locator("//div[@class='alert alert-success alert-dismissible']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shoppingCartPage.fillAllDetailsInTaxSection();
+        softAssert.assertAll();
     }
 
     @Test(priority = 11)
@@ -149,10 +139,8 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.shoppingCartPage();
-        page.click("text=Estimate Shipping & Taxes ");
-        page.dblclick("#button-quote");
-//        page.locator("//div[text()='Please select a region / state!']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        page.locator("//div[text()='Postcode must be between 2 and 10 characters!']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shoppingCartPage.withoutEnterInTaxSection();
+        softAssert.assertAll();
     }
 
     @Test(priority = 12)
@@ -161,10 +149,8 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.shoppingCartPage();
-        page.click("text=Use Gift Certificate ");
-        page.fill("#input-voucher", "1234567890");
-        page.click("#button-voucher");
-        page.locator("//i[@class='fa fa-exclamation-circle']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shoppingCartPage.invalidGift();
+        softAssert.assertAll();
     }
 
     @Test(priority = 13)
@@ -173,9 +159,8 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.shoppingCartPage();
-        page.click("text=Use Gift Certificate ");
-        page.click("#button-voucher");
-        page.locator("//div[@class='alert alert-danger alert-dismissible']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shoppingCartPage.withoutEnterGift();
+        softAssert.assertAll();
     }
 
     @Test(priority = 14)
@@ -184,8 +169,8 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.shoppingCartPage();
-        page.click("text=Continue Shopping");
-        page.locator("//a[text()='Qafox.com']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shoppingCartPage.continueShopping();
+        softAssert.assertAll();
     }
 
     @Test(priority = 15)
@@ -194,8 +179,8 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.shoppingCartPage();
-        page.click("//button[@class='btn btn-danger']");
-        page.locator("//h1[text()='Shopping Cart']/following-sibling::p").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shoppingCartPage.removeProductInCart();
+        softAssert.assertAll();
     }
 
     @Test(priority = 16)
@@ -204,9 +189,8 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.shoppingCartPage();
-        page.fill("(//input[@type='text' and @class='form-control'])[1]", "2");
-        page.click("//button[@type='submit']");
-        page.locator("//div[@class='alert alert-success alert-dismissible']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shoppingCartPage.editTheQuantity();
+        softAssert.assertAll();
     }
 
     @Test(priority = 17)
@@ -215,40 +199,38 @@ public class ShoppingCartTest extends Base {
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.shoppingCartPage();
-        page.fill("(//input[@type='text' and @class='form-control'])[1]", "-2");
-        page.click("//button[@type='submit']");
-        page.locator("//h1[text()='Shopping Cart']/following-sibling::p").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shoppingCartPage.enterNegativeValue();
+        softAssert.assertAll();
     }
 
     @Test(priority = 18)
-    public void verifyNotAvailableProductNotification(){
+    public void verifyNotAvailableProductNotification() {
         searchPage = new SearchPage(page);
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.shoppingCartPage();
-        page.locator("//div[@class='alert alert-danger alert-dismissible']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shoppingCartPage.notAvailableProduct();
+        softAssert.assertAll();
     }
 
     @Test(priority = 19)
-    public void verifyEnterZeroAndClickUpdateButton(){
+    public void verifyEnterZeroAndClickUpdateButton() {
         searchPage = new SearchPage(page);
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.shoppingCartPage();
-        page.fill("(//input[@type='text' and @class='form-control'])[1]", "0");
-        page.click("//button[@type='submit']");
-        page.locator("//h1[text()='Shopping Cart']/following-sibling::p").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shoppingCartPage.enterZero();
+        softAssert.assertAll();
     }
 
     @Test(priority = 20)
-    public void verifyEnterNumericalValuesAndClickUpdateButton(){
+    public void verifyEnterNumericalValuesAndClickUpdateButton() {
         searchPage = new SearchPage(page);
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.shoppingCartPage();
-        page.fill("(//input[@type='text' and @class='form-control'])[1]", "asdf");
-        page.click("//button[@type='submit']");
-        page.locator("//h1[text()='Shopping Cart']/following-sibling::p").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shoppingCartPage.numericalValues();
+        softAssert.assertAll();
     }
 
 }

@@ -32,14 +32,10 @@ public class LoginPage {
     }
 
     public void validLogin() {
-        page.locator("#input-email").fill(prop.getProperty("validUserEmail"));
-        page.locator("#input-password").fill(prop.getProperty("validPassword"));
-        page.locator("//input[@value='Login']").click();
-        if (page.locator("//h2[text()='My Account']").isVisible()) {
-            System.out.println("User successfully login in to the application");
-        } else {
-            System.out.println("User Failed to login to the application ");
-        }
+        page.fill("#input-email", prop.getProperty("validUserEmail"));
+        page.fill("#input-password", prop.getProperty("validPassword"));
+        page.click("//input[@value='Login']");
+        Assert.assertTrue(page.isVisible("//h2[text()='My Account']"));
     }
 
     public void invalidLogin() {

@@ -18,7 +18,7 @@ public class ExtentReporter {
     public static ExtentReports generateExtentReport() {
         ExtentReports extentReport = new ExtentReports();
         String timeStamp = new SimpleDateFormat("dd_MM_yyyy HH_mm_ss").format(new Date());
-        reportFilePath = System.getProperty("user.dir") + "\\test-output\\ExtentReport\\extentReport" + timeStamp + ".html";
+        reportFilePath = System.getProperty("user.dir") + "\\test-output\\extentReport" + timeStamp + ".html";
         File extentReportFile = new File(reportFilePath);
         extentReportFile.getParentFile().mkdir();
         ExtentSparkReporter sparkReporter = new ExtentSparkReporter(extentReportFile);
