@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <listeners>
+        <listener class-name="tutorialsninja_Listener.Listener"></listener>
+    </listeners>
+    <test verbose="2" preserve-order="true"
+          name="C:/Users/MathewPonyabes/eclipse-workspace/PlaywrightFramework/src/test/java/com/tutorialsninja_Testcases">
+        <classes>
+            <class name="com.tutorialsninja_Testcases.LoginTest">
+                <methods>
+                    <include name="loginWithValidCredentials"/>
+                    <include name="loginWithInvalidCredentials"/>
+                    <include name="verifyLoginWithInvalidEmailAddressAndValidPassword"/>
+                    <include name="verifyLoginWithValidEmailAddressAndInvalidPassword"/>
+                    <include name="verifyLoginWithoutEnteringTheCredentials"/>
+                </methods>
+            </class>
+<!--            <class name="com.tutorialsninja_Testcases.LogoutTest">-->
+<!--                <methods>-->
+<!--                    <include name="verifyLogoutUsingDropdown"/>-->
+<!--                    <include name="verifyLogoutUsingRightColoumnOptions"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            <class name="com.tutorialsninja_Testcases.RegisterTest">-->
+<!--                <methods>-->
+<!--                    <include name="verifyRegisterAccountWithMandatoryFields"/>-->
+<!--                    <include name="verifyRegisteringAnAccountByProvidingAllTheFields"/>-->
+<!--                    <include name="verifyRegisteringAccountWithoutFillingAnyDetails"/>-->
+<!--                    <include name="verifyRegisterAccountEnteringDifferentPassword"/>-->
+<!--                    <include name="verifyRegisteringAnAccountExistingAccount"/>-->
+<!--                    <include name="verifyRegisterAccountByUsingInvalidEmail"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            <class name="com.tutorialsninja_Testcases.SearchTest">-->
+<!--                <methods>-->
+<!--                    <include name="verifySearchExistingProductName"/>-->
+<!--                    <include name="verifySearchNonExistingProductName"/>-->
+<!--                    <include name="verifySearchWithoutEnteringName"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            <class name="com.tutorialsninja_Testcases.ShoppingCartTest">-->
+<!--                <methods>-->
+<!--                    <include name="verifyNavigateToTheShoppingCartPage"/>-->
+<!--                    <include name="verifyNavigateShoppingCartPageUsingHeaderOption"/>-->
+<!--                    <include name="verifyNavigateToTheSiteMapPageFromShoppingPage"/>-->
+<!--                    <include name="verifyTheCartWhenThereIsNoProductAdded"/>-->
+<!--                    <include name="verifyNavigateToTheShoppingCartPageUsingCartBlock"/>-->
+<!--                    <include name="verifyWeightOfTheProductInShoppingCart"/>-->
+<!--                    <include name="verifyCouponCodeProvidingInvalidCoupon"/>-->
+<!--                    <include name="verifyThePageWithoutEnterCouponCode"/>-->
+<!--                    <include name="verifyClosingTheWarningMessageInTheShoppingCartPage"/>-->
+<!--                    <include name="verifyFillAllTheDetailsInEstimateAndTaxes"/>-->
+<!--                    <include name="verifyWithoutEnteringTheDetailsInTheTaxes"/>-->
+<!--                    <include name="verifyEnteringInvalidGiftCertificateInTheShoppingCartPage"/>-->
+<!--                    <include name="verifyWithoutEnteringTheGiftCode"/>-->
+<!--                    <include name="verifyTheContinueShoppingLink"/>-->
+<!--                    <include name="verifyRemoveTheProductCartPage"/>-->
+<!--                    <include name="verifyEditTheQuantity"/>-->
+<!--                    <include name="verifyEnterNegativeValesAndClickUpdateButton"/>-->
+<!--                    <include name="verifyNotAvailableProductNotification"/>-->
+<!--                    <include name="verifyEnterZeroAndClickUpdateButton"/>-->
+<!--                    <include name="verifyEnterNumericalValuesAndClickUpdateButton"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            <class name="com.tutorialsninja_Testcases.SpecialOfferTest">-->
+<!--                <methods>-->
+<!--                    <include name="navigateToTheSpecialOfferPage"/>-->
+<!--                    <include name="navigateToTheSiteMapPage"/>-->
+<!--                    <include name="VerifyTheProductDisplayedInListView"/>-->
+<!--                    <include name="VerifyTheProductDisplayedInGridView"/>-->
+<!--                    <include name="VerifyProductComparePage"/>-->
+<!--                    <include name="verifyAddProductForComparison"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+        </classes>
+    </test>
+</suite>
