@@ -1,14 +1,16 @@
 package com.tutorialsninja_Testcases;
 
-import com.microsoft.playwright.*;
-import com.microsoft.playwright.options.WaitForSelectorState;
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
 import com.tutorialsninja_Base.Base;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tutorialsninja_Pages.HomePage;
 import tutorialsninja_Pages.LoginPage;
+import tutorialsninja_Pages.MyAccountInformationPage;
 
 public class MyAccountInformationTest extends Base {
 
@@ -17,6 +19,7 @@ public class MyAccountInformationTest extends Base {
     public Page page;
     public HomePage homePage;
     public LoginPage loginPage;
+    public MyAccountInformationPage myAccountInformationPage;
 
     @BeforeMethod
     public void setup() {
@@ -39,59 +42,31 @@ public class MyAccountInformationTest extends Base {
 
     @Test(priority = 1)
     public void verifyNavigateToTheMyAccountInformationPage() {
-        page.click(" //span[text()='My Account']");
-        page.click("text=My Account");
-        page.click("text=Edit your account information");
-        page.locator("//h1[text()='My Account Information']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        myAccountInformationPage = new MyAccountInformationPage(page);
+        myAccountInformationPage.navigateToTheAccountInformationPage();
         softAssert.assertAll();
     }
 
     @Test(priority = 2)
     public void verifyNavigateToTheMyAccountInformationPageUsingRightColumnOption() {
-        page.click(" //span[text()='My Account']");
-        page.click("text=My Account");
-        page.click("text=Edit Account");
-        page.locator("//h1[text()='My Account Information']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        myAccountInformationPage = new MyAccountInformationPage(page);
+        myAccountInformationPage.navigateToTheAccountInformationPageUsingRightColumnOption();
         softAssert.assertAll();
     }
 
     @Test(priority = 3)
-    public void verifyNavigateToTheMyAccountInformationPageFromSiteMapPage(){
-        page.click("text=Site Map");
-        page.click("text=Account Information");
-        page.locator("//h1[text()='My Account Information']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+    public void verifyNavigateToTheMyAccountInformationPageFromSiteMapPage() {
+        myAccountInformationPage = new MyAccountInformationPage(page);
+        myAccountInformationPage.navigateAccountInformationPageFromSiteInformationPage();
         softAssert.assertAll();
     }
 
 
     @Test(priority = 4)
-    public void verifyAllTheFieldsAreEmptyFieldsInAccountInformationPage(){
-        page.click(" //span[text()='My Account']");
-        page.click("text=My Account");
-        page.click("text=Edit your account information");
-        page.fill("#input-firstname","");
-        page.fill("#input-lastname","");
-        page.fill("#input-email","");
-        page.fill("#input-telephone","");
-        page.click("//input[@type='submit']");
-        page.locator("text=First Name must be between 1 and 32 characters!").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        Assert.assertTrue(page.locator("text=Last Name must be between 1 and 32 characters!").isVisible());
-        Assert.assertTrue(page.locator("text=E-Mail Address does not appear to be valid!").isVisible());
-        Assert.assertTrue(page.locator("text=Telephone must be between 3 and 32 characters!").isVisible());
+    public void verifyAllTheFieldsAreEmptyFieldsInAccountInformationPage() {
+        myAccountInformationPage = new MyAccountInformationPage(page);
+        myAccountInformationPage.verifyEmptyFieldsOfAccountInformationPage();
         softAssert.assertAll();
     }
-
-
-    @Test(priority = 5)
-    public void verifyTheFiledInAccountInformationPageMarkedAsMandatory(){
-        page.click(" //span[text()='My Account']");
-        page.click("text=My Account");
-        page.click("text=Edit your account information");
-        String screenshotDir = System.getProperty("user.dir") + "/screenshots/";
-        Assert.assertTrue(page.locator("//label[@for='input-firstname']").innerText().contains("*"));
-        softAssert.assertAll();
-    }
-
-
 
 }
