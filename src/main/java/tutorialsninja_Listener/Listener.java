@@ -7,6 +7,7 @@ import com.microsoft.playwright.Page;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import tutorialsninja_Utils.EmailUtils;
 import tutorialsninja_Utils.ExtentReporter;
 
 import java.awt.*;
@@ -67,7 +68,7 @@ public class Listener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         System.out.println("Screenshot Taken");
-        extentTest.log(Status.FAIL,"test failed"+result.getThrowable());
+        extentTest.log(Status.FAIL, "test failed" + result.getThrowable());
         try {
             Object testClassInstance = result.getInstance();
             Field field = testClassInstance.getClass().getDeclaredField("page");
@@ -77,9 +78,9 @@ public class Listener implements ITestListener {
             e.printStackTrace();
         }
         if (page != null) {
-            String fileName = result.getName() + "_" + System.currentTimeMillis()+".png";
+            String fileName = result.getName() + "_" + System.currentTimeMillis() + ".png";
             String dir = System.getProperty("user.dir") + File.separator + "screenshot";
-            Path path = Paths.get(dir,fileName);
+            Path path = Paths.get(dir, fileName);
             String relativePath = "../screenshot/" + fileName;
             try {
                 Files.createDirectories(path.getParent());
@@ -115,15 +116,20 @@ public class Listener implements ITestListener {
     public void onFinish(ITestContext context) {
         extentReport.flush();
         File extentReportFile = new File(ExtentReporter.getReportFilePath());
-        try{
-            if(extentReportFile.exists()){
+        try {
+            if (extentReportFile.exists()) {
+//              Open the report in browser
                 Desktop.getDesktop().browse(extentReportFile.toURI());
                 System.out.println("opened report" + extentReportFile.getAbsolutePath());
-            }else {
+
+//                Send the report via email
+                EmailUtils.sendReport(extentReportFile.getAbsolutePath());
+                System.out.println("Email sent successfully with the latest report");
+            } else {
                 System.out.println("Report is not found" + extentReportFile.getAbsolutePath());
             }
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
 }

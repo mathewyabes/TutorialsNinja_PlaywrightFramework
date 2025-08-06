@@ -15,13 +15,16 @@ public class LoginPage {
     public Properties prop;
     private final Page page;
     private final Locator userName;
+    private final Locator password;
+    private final Locator loginButton;
+    private final Locator successHomePage;
+    private final Locator errorMessage;
 
     public LoginPage(Page page) {
         prop = new Properties();
         File propfile = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\Config.properties");
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(propfile);
+
+        try (FileInputStream fis = new FileInputStream(propfile)){
             prop.load(fis);
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,38 +32,42 @@ public class LoginPage {
 
         this.page = page;
         this.userName = page.locator("#input-email");
+        this.password = page.locator("#input-password");
+        this.loginButton = page.locator("//input[@value='Login']");
+        this.successHomePage = page.locator("//h2[text()='My Account']");
+        this.errorMessage = page.locator("//div[@class='alert alert-danger alert-dismissible']");
     }
 
     public void validLogin() {
-        page.fill("#input-email", prop.getProperty("validUserEmail"));
-        page.fill("#input-password", prop.getProperty("validPassword"));
-        page.click("//input[@value='Login']");
-        Assert.assertTrue(page.isVisible("//h2[text()='My Account']"));
+        userName.fill(prop.getProperty("validUserEmail"));
+        password.fill(prop.getProperty("validPassword"));
+        loginButton.click();
+        Assert.assertTrue(successHomePage.isVisible());
     }
 
     public void invalidLogin() {
-        page.locator("#input-email").fill(prop.getProperty("invalidEmail"));
-        page.locator("#input-password").fill(prop.getProperty("invalidPassword"));
-        page.locator("//input[@value='Login']").click();
-        Assert.assertTrue(page.locator("//div[@class='alert alert-danger alert-dismissible']").isVisible());
+        userName.fill(prop.getProperty("invalidEmail"));
+        password.fill(prop.getProperty("invalidPassword"));
+        loginButton.click();
+        Assert.assertTrue(errorMessage.isVisible());
     }
 
     public void invalidEmail() {
-        page.locator("#input-email").fill(prop.getProperty("invalidEmail"));
-        page.locator("#input-password").fill(prop.getProperty("validPassword"));
-        page.locator("//input[@value='Login']").click();
-        Assert.assertTrue(page.locator("//div[@class='alert alert-danger alert-dismissible']").isVisible());
+        userName.fill(prop.getProperty("invalidEmail"));
+        password.fill(prop.getProperty("validPassword"));
+        loginButton.click();
+        Assert.assertTrue(errorMessage.isVisible());
     }
 
     public void invalidPassword() {
-        page.locator("#input-email").fill(prop.getProperty("validUserEmail"));
-        page.locator("#input-password").fill(prop.getProperty("invalidPassword"));
-        page.locator("//input[@value='Login']").click();
-        Assert.assertTrue(page.locator("//div[@class='alert alert-danger alert-dismissible']").isVisible());
+        userName.fill(prop.getProperty("validUserEmail"));
+        password.fill(prop.getProperty("invalidPassword"));
+        loginButton.click();
+        Assert.assertTrue(errorMessage.isVisible());
     }
 
     public void emptyField() {
-        page.locator("//input[@value='Login']").click();
-        Assert.assertTrue(page.locator("//div[@class='alert alert-danger alert-dismissible']").isVisible());
+        loginButton.click();
+        Assert.assertTrue(errorMessage.isVisible());
     }
 }

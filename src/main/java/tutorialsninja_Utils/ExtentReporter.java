@@ -13,7 +13,7 @@ public class ExtentReporter {
 
     public static ExtentReports extentReport = ExtentReporter.generateExtentReport(); // connect it!
     public static ExtentTest extentTest;
-    private static String reportFilePath;
+    public static String reportFilePath;
 
     public static ExtentReports generateExtentReport() {
         ExtentReports extentReport = new ExtentReports();

@@ -25,7 +25,7 @@ public class HomePage {
         loginOption.click();
     }
 
-    public void clickRegisterOption(){
+    public void clickRegisterOption() {
         registerOption.click();
     }
 }

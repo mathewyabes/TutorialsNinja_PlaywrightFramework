@@ -1,6 +1,12 @@
 package com.tutorialsninja_Base;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import org.testng.asserts.SoftAssert;
+import tutorialsninja_Utils.EmailUtils;
+import tutorialsninja_Utils.ExtentReporter;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,7 +30,7 @@ public class Base {
         }
 
         dataProp = new Properties();
-        File dataPropFile = new File(System.getProperty("user.dir")+"\\src\\main\\resources\\TestData.properties");
+        File dataPropFile = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\TestData.properties");
         try {
             FileInputStream datafis = new FileInputStream(dataPropFile);
             dataProp.load(datafis);

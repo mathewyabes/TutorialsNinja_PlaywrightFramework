@@ -1,5 +1,6 @@
 package tutorialsninja_Pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import org.testng.Assert;
 import tutorialsninja_Utils.Utilities;
@@ -12,14 +13,46 @@ public class RegisterPage {
     public Properties prop;
     public Properties dataProp;
     private final Page page;
+    private final Locator firstName;
+    private final Locator lastName;
+    private final Locator email;
+    private final Locator phoneNumber;
+    private final Locator password;
+    private final Locator confirmPassword;
+    private final Locator agreeButton;
+    private final Locator continueButton;
+    private final Locator successMessage;
+    private final Locator newsLetterButton;
+    private final Locator errorMessage;
+    private final Locator firstNameErrorMessage;
+    private final Locator lastNameErrorMessage;
+    private final Locator emailErrorMessage;
+    private final Locator telephoneErrorMessage;
+    private final Locator passwordErrorMessage;
+    private final Locator passwordMissMatchErrorMessage;
 
     public RegisterPage(Page page) {
         this.page = page;
+        this.firstName = page.locator("#input-firstname");
+        this.lastName = page.locator("#input-lastname");
+        this.email = page.locator("#input-email");
+        this.phoneNumber = page.locator("#input-telephone");
+        this.password = page.locator("#input-password");
+        this.confirmPassword = page.locator("#input-confirm");
+        this.agreeButton = page.locator("[name='agree']");
+        this.continueButton = page.locator("//input[@value='Continue']");
+        this.successMessage = page.locator("//div[@id='content']//h1[text()='Your Account Has Been Created!']");
+        this.newsLetterButton = page.locator("//input[@name='newsletter' and @value='1']");
+        this.errorMessage = page.locator("//div[@class='alert alert-danger alert-dismissible']");
+        this.firstNameErrorMessage = page.locator("//div[text()='First Name must be between 1 and 32 characters!']");
+        this.lastNameErrorMessage = page.locator("//div[text()='Last Name must be between 1 and 32 characters!']");
+        this.emailErrorMessage = page.locator("//div[text()='E-Mail Address does not appear to be valid!']");
+        this.telephoneErrorMessage = page.locator("//div[text()='Telephone must be between 3 and 32 characters!']");
+        this.passwordErrorMessage = page.locator("//div[text()='Password must be between 4 and 20 characters!']");
+        this.passwordMissMatchErrorMessage = page.locator("//div[@class='text-danger']");
         prop = new Properties();
         File propfile = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\Config.properties");
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(propfile);
+        try (FileInputStream fis = new FileInputStream(propfile)) {
             prop.load(fis);
         } catch (Exception e) {
             e.printStackTrace();
@@ -27,8 +60,7 @@ public class RegisterPage {
 
         dataProp = new Properties();
         File dataPropFile = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\TestData.properties");
-        try {
-            FileInputStream datafis = new FileInputStream(dataPropFile);
+        try (FileInputStream datafis = new FileInputStream(dataPropFile)) {
             dataProp.load(datafis);
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,80 +68,77 @@ public class RegisterPage {
     }
 
     public void register() {
-        page.locator("#input-firstname").fill(dataProp.getProperty("firstName"));
-        page.locator("#input-lastname").fill(dataProp.getProperty("lastName"));
-        page.locator("#input-email").fill(Utilities.generateTimeStamp());
-        page.locator("#input-telephone").fill(dataProp.getProperty("telePhone"));
-        page.locator("#input-password").fill(dataProp.getProperty("password"));
-        page.locator("#input-confirm").fill(dataProp.getProperty("confirmPassword"));
-        page.locator("[name='agree']").click();
-        page.locator("//input[@value='Continue']").click();
-        System.out.println("The user successfully Enter their details");
-        Assert.assertTrue(page.locator("//div[@id='content']//h1[text()='Your Account Has Been Created!']").isVisible());
-        System.out.println("The User Register their Successfully");
+        firstName.fill(dataProp.getProperty("firstName"));
+        lastName.fill(dataProp.getProperty("lastName"));
+        email.fill(Utilities.generateTimeStamp());
+        phoneNumber.fill(dataProp.getProperty("telePhone"));
+        password.fill(dataProp.getProperty("password"));
+        confirmPassword.fill(dataProp.getProperty("confirmPassword"));
+        agreeButton.click();
+        continueButton.click();
+        Assert.assertTrue(successMessage.isVisible());
     }
 
     public void registerAllField() {
-        page.locator("#input-firstname").fill(dataProp.getProperty("firstName"));
-        page.locator("#input-lastname").fill(dataProp.getProperty("lastName"));
-        page.locator("#input-email").fill(Utilities.generateTimeStamp());
-        page.locator("#input-telephone").fill(dataProp.getProperty("telePhone"));
-        page.locator("#input-password").fill(dataProp.getProperty("password"));
-        page.locator("#input-confirm").fill(dataProp.getProperty("confirmPassword"));
-        page.locator("//input[@name='newsletter' and @value='1']").click();
-        page.locator("[name='agree']").click();
-        page.locator("//input[@type='submit']").click();
-        Assert.assertTrue(page.locator("//div[@id='content']//h1[text()='Your Account Has Been Created!']").isVisible());
-        System.out.println("The User Register their Successfully");
+        firstName.fill(dataProp.getProperty("firstName"));
+        lastName.fill(dataProp.getProperty("lastName"));
+        email.fill(Utilities.generateTimeStamp());
+        phoneNumber.fill(dataProp.getProperty("telePhone"));
+        password.fill(dataProp.getProperty("password"));
+        confirmPassword.fill(dataProp.getProperty("confirmPassword"));
+        newsLetterButton.click();
+        agreeButton.click();
+        continueButton.click();
+        Assert.assertTrue(successMessage.isVisible());
     }
 
     public void withoutFilled() {
-        page.locator("//input[@type='submit']").click();
-        Assert.assertTrue(page.locator("//div[@class='alert alert-danger alert-dismissible']").isVisible());
-        Assert.assertTrue(page.locator("//div[text()='First Name must be between 1 and 32 characters!']").isVisible());
-        Assert.assertTrue(page.locator("//div[text()='Last Name must be between 1 and 32 characters!']").isVisible());
-        Assert.assertTrue(page.locator("//div[text()='E-Mail Address does not appear to be valid!']").isVisible());
-        Assert.assertTrue(page.locator("//div[text()='Telephone must be between 3 and 32 characters!']").isVisible());
-        Assert.assertTrue(page.locator("//div[text()='Password must be between 4 and 20 characters!']").isVisible());
+        continueButton.click();
+        Assert.assertTrue(errorMessage.isVisible());
+        Assert.assertTrue(firstNameErrorMessage.isVisible());
+        Assert.assertTrue(lastNameErrorMessage.isVisible());
+        Assert.assertTrue(emailErrorMessage.isVisible());
+        Assert.assertTrue(telephoneErrorMessage.isVisible());
+        Assert.assertTrue(passwordErrorMessage.isVisible());
     }
 
     public void differentPassword() {
-        page.locator("#input-firstname").fill(dataProp.getProperty("firstName"));
-        page.locator("#input-lastname").fill(dataProp.getProperty("lastName"));
-        page.locator("#input-email").fill(Utilities.generateTimeStamp());
-        page.locator("#input-telephone").fill(dataProp.getProperty("telePhone"));
-        page.locator("#input-password").fill(dataProp.getProperty("password"));
-        page.locator("#input-confirm").fill(prop.getProperty("invalidPassword"));
-        page.locator("['name=newsletter']");
-        page.locator("[name='agree'']");
-        page.locator("//input[@type='submit']").click();
-        Assert.assertTrue(page.locator("//div[@class='text-danger']").isVisible());
+        firstName.fill(dataProp.getProperty("firstName"));
+        lastName.fill(dataProp.getProperty("lastName"));
+        email.fill(Utilities.generateTimeStamp());
+        phoneNumber.fill(dataProp.getProperty("telePhone"));
+        password.fill(dataProp.getProperty("password"));
+        confirmPassword.fill(prop.getProperty("invalidPassword"));
+        newsLetterButton.click();
+        agreeButton.click();
+        continueButton.click();
+        Assert.assertTrue(passwordMissMatchErrorMessage.isVisible());
     }
 
     public void existingAccount() {
-        page.locator("#input-firstname").fill(dataProp.getProperty("firstName"));
-        page.locator("#input-lastname").fill(dataProp.getProperty("lastName"));
-        page.locator("#input-email").fill(prop.getProperty("validUserEmail"));
-        page.locator("#input-telephone").fill(dataProp.getProperty("telePhone"));
-        page.locator("#input-password").fill(dataProp.getProperty("password"));
-        page.locator("#input-confirm").fill(dataProp.getProperty("confirmPassword"));
-        page.locator("//input[@name='newsletter' and @value='1']").click();
-        page.locator("[name='agree']").click();
-        page.locator("//input[@type='submit']").click();
-        Assert.assertTrue(page.locator("//div[@class='alert alert-danger alert-dismissible']").isVisible());
+        firstName.fill(dataProp.getProperty("firstName"));
+        lastName.fill(dataProp.getProperty("lastName"));
+        email.fill(prop.getProperty("validUserEmail"));
+        phoneNumber.fill(dataProp.getProperty("telePhone"));
+        password.fill(dataProp.getProperty("password"));
+        confirmPassword.fill(dataProp.getProperty("confirmPassword"));
+        newsLetterButton.click();
+        agreeButton.click();
+        continueButton.click();
+        Assert.assertTrue(errorMessage.isVisible());
     }
 
     public void invalidEmail() {
-        page.locator("#input-firstname").fill(dataProp.getProperty("firstName"));
-        page.locator("#input-lastname").fill(dataProp.getProperty("lastName"));
-        page.locator("#input-email").fill(prop.getProperty("invalidEmail"));
-        page.locator("#input-telephone").fill(dataProp.getProperty("telePhone"));
-        page.locator("#input-password").fill(dataProp.getProperty("password"));
-        page.locator("#input-confirm").fill(dataProp.getProperty("confirmPassword"));
-        page.locator("//input[@name='newsletter' and @value='1']").click();
-        page.locator("[name='agree']").click();
-        page.locator("//input[@type='submit']").click();
-        Assert.assertTrue(page.locator("//div[text()='E-Mail Address does not appear to be valid!']").isVisible());
+        firstName.fill(dataProp.getProperty("firstName"));
+        lastName.fill(dataProp.getProperty("lastName"));
+        email.fill(prop.getProperty("invalidEmail"));
+        phoneNumber.fill(dataProp.getProperty("telePhone"));
+        password.fill(dataProp.getProperty("password"));
+        confirmPassword.fill(dataProp.getProperty("confirmPassword"));
+        newsLetterButton.click();
+        agreeButton.click();
+        continueButton.click();
+        Assert.assertTrue(emailErrorMessage.isVisible());
     }
 
 }
