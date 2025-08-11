@@ -28,6 +28,26 @@ public class ShoppingCartPage {
     private Locator couponCodeErrorMessage;
     private Locator closeErrorMessage;
     private Locator shipping;
+    private Locator countryCode;
+    private Locator zoneCode;
+    private Locator postCode;
+    private Locator quoteButton;
+    private Locator shippingMethodButton;
+    private Locator shippingButton;
+    private Locator successAlertMessage;
+    private Locator postcodeErrorMessage;
+    private Locator stateErrorMessage;
+    private Locator giftLink;
+    private Locator voucherField;
+    private Locator voucherButton;
+    private Locator giftErrorMessage;
+    private Locator errorMessage;
+    private Locator continueShoppingLink;
+    private Locator shoppingPageVerify;
+    private Locator removeButton;
+    private Locator cartEmpty;
+    private Locator editCartField;
+    private Locator submitButton;
 
     public ShoppingCartPage(Page page) {
         this.page = page;
@@ -51,6 +71,27 @@ public class ShoppingCartPage {
         this.invalidCouponErrorMessage = page.locator("//div[contains(@class, 'alert') and contains(., 'Coupon is either invalid')]");
         this.couponCodeErrorMessage = page.locator("//div[contains(@class, 'alert') and contains(., 'Please enter a coupon code')]");
         this.closeErrorMessage = page.locator("//button[@type='button' and @class='close']");
+        this.shipping = page.locator("text=Estimate Shipping & Taxes ");
+        this.countryCode = page.locator("#input-country");
+        this.zoneCode = page.locator("#input-zone");
+        this.postCode = page.locator("#input-postcode");
+        this.quoteButton = page.locator("#button-quote");
+        this.shippingMethodButton =page.locator("//input[@name='shipping_method']");
+        this.shippingButton = page.locator("#button-shipping");
+        this.successAlertMessage = page.locator("//div[@class='alert alert-success alert-dismissible']");
+        this.postcodeErrorMessage = page.locator("//div[text()='Postcode must be between 2 and 10 characters!']");
+        this.stateErrorMessage = page.locator("//div[text()='Please select a region / state!']");
+        this.giftLink = page.locator("text=Use Gift Certificate ");
+        this.voucherField = page.locator("#input-voucher");
+        this.voucherButton = page.locator("#button-voucher");
+        this.giftErrorMessage = page.locator("//i[@class='fa fa-exclamation-circle']");
+        this.errorMessage = page.locator("//div[@class='alert alert-danger alert-dismissible']");
+        this.continueShoppingLink = page.locator("text=Continue Shopping");
+        this.shoppingPageVerify = page.locator("//a[text()='Qafox.com']");
+        this.removeButton = page.locator("//button[@class='btn btn-danger']");
+        this.cartEmpty = page.locator("//h1[text()='Shopping Cart']/following-sibling::p");
+        this.editCartField = page.locator("(//input[@type='text' and @class='form-control'])[1]");
+        this.submitButton = page.locator("//button[@type='submit']");
     }
 
     public void shoppingCartPage() {
@@ -123,72 +164,95 @@ public class ShoppingCartPage {
     }
 
     public void fillAllDetailsInTaxSection() {
-        page.click("text=Estimate Shipping & Taxes ");
-        page.selectOption("#input-country", "99");
-        page.selectOption("#input-zone", "1503");
-        page.locator("#input-postcode").fill("627853");
-        page.click("#button-quote");
-        page.click("//input[@name='shipping_method']");
-        page.click("#button-shipping");
-        page.locator("//div[@class='alert alert-success alert-dismissible']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shipping.click();
+        countryCode.selectOption("99");
+        zoneCode.selectOption("1503");
+        postCode.fill("627853");
+        quoteButton.click();
+        shippingMethodButton.click();
+        shippingButton.click();
+        successAlertMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void withoutEnterInTaxSection() {
-        page.click("text=Estimate Shipping & Taxes ");
-        page.dblclick("#button-quote");
-//        page.locator("//div[text()='Please select a region / state!']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        page.locator("//div[text()='Postcode must be between 2 and 10 characters!']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        shipping.click();
+        quoteButton.dblclick();
+        postcodeErrorMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        stateErrorMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void invalidGift() {
-        page.click("text=Use Gift Certificate ");
-        page.fill("#input-voucher", "1234567890");
-        page.click("#button-voucher");
-        page.locator("//i[@class='fa fa-exclamation-circle']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        giftLink.click();
+        voucherField.fill("1234567890");
+        voucherButton.click();
+        giftErrorMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+//        page.click("text=Use Gift Certificate ");
+//        page.fill("#input-voucher", "1234567890");
+//        page.click("#button-voucher");
+//        page.locator("//i[@class='fa fa-exclamation-circle']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void withoutEnterGift() {
-        page.click("text=Use Gift Certificate ");
-        page.click("#button-voucher");
-        page.locator("//div[@class='alert alert-danger alert-dismissible']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        giftLink.click();
+        voucherButton.click();
+        errorMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+//        page.click("text=Use Gift Certificate ");
+//        page.click("#button-voucher");
+//        page.locator("//div[@class='alert alert-danger alert-dismissible']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void continueShopping() {
-        page.click("text=Continue Shopping");
-        page.locator("//a[text()='Qafox.com']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        continueShoppingLink.click();
+        shoppingPageVerify.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+//        page.click("text=Continue Shopping");
+//        page.locator("//a[text()='Qafox.com']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
-
     public void removeProductInCart() {
-        page.click("//button[@class='btn btn-danger']");
-        page.locator("//h1[text()='Shopping Cart']/following-sibling::p").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        removeButton.click();
+        cartEmpty.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+//        page.click("//button[@class='btn btn-danger']");
+//        page.locator("//h1[text()='Shopping Cart']/following-sibling::p").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void editTheQuantity() {
-        page.fill("(//input[@type='text' and @class='form-control'])[1]", "2");
-        page.click("//button[@type='submit']");
-        page.locator("//div[@class='alert alert-success alert-dismissible']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        editCartField.fill("2");
+        submitButton.click();
+        successAlertMessage.click();
+//        page.fill("(//input[@type='text' and @class='form-control'])[1]", "2");
+//        page.click("//button[@type='submit']");
+//        page.locator("//div[@class='alert alert-success alert-dismissible']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void enterNegativeValue() {
-        page.fill("(//input[@type='text' and @class='form-control'])[1]", "-2");
-        page.click("//button[@type='submit']");
-        page.locator("//h1[text()='Shopping Cart']/following-sibling::p").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        editCartField.fill("-2");
+        submitButton.click();
+        cartEmpty.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+//        page.fill("(//input[@type='text' and @class='form-control'])[1]", "-2");
+//        page.click("//button[@type='submit']");
+//        page.locator("//h1[text()='Shopping Cart']/following-sibling::p").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void notAvailableProduct() {
-        page.locator("//div[@class='alert alert-danger alert-dismissible']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        errorMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+//        page.locator("//div[@class='alert alert-danger alert-dismissible']").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void enterZero() {
-        page.fill("(//input[@type='text' and @class='form-control'])[1]", "0");
-        page.click("//button[@type='submit']");
-        page.locator("//h1[text()='Shopping Cart']/following-sibling::p").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        editCartField.fill("0");
+        submitButton.click();
+        cartEmpty.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+//        page.fill("(//input[@type='text' and @class='form-control'])[1]", "0");
+//        page.click("//button[@type='submit']");
+//        page.locator("//h1[text()='Shopping Cart']/following-sibling::p").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
-    public void numericalValues() {
-        page.fill("(//input[@type='text' and @class='form-control'])[1]", "asdf");
-        page.click("//button[@type='submit']");
-        page.locator("//h1[text()='Shopping Cart']/following-sibling::p").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+    public void alphabeticCharacters() {
+        editCartField.fill("asdf");
+        submitButton.click();
+        cartEmpty.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+//        page.fill("(//input[@type='text' and @class='form-control'])[1]", "asdf");
+//        page.click("//button[@type='submit']");
+//        page.locator("//h1[text()='Shopping Cart']/following-sibling::p").waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 }

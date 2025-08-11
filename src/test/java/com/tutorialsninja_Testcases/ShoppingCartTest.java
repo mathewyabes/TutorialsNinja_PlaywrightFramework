@@ -224,12 +224,12 @@ public class ShoppingCartTest extends Base {
     }
 
     @Test(priority = 20)
-    public void verifyEnterNumericalValuesAndClickUpdateButton() {
+    public void verifyEnterAlphabeticCharactersAndClickUpdateButton() {
         searchPage = new SearchPage(page);
         searchPage.existingProduct();
         shoppingCartPage = new ShoppingCartPage(page);
         shoppingCartPage.shoppingCartPage();
-        shoppingCartPage.numericalValues();
+        shoppingCartPage.alphabeticCharacters();
         softAssert.assertAll();
     }
 
