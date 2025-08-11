@@ -11,18 +11,18 @@ public class SpecialOfferPage {
 
     public Properties prop;
     public Page page;
-    private Locator specialOfferLink;
-    private Locator siteMapLink;
-    private Locator sitemapPageVerify;
-    private Locator listViewLink;
-    private Locator activeButton;
-    private Locator gridView;
-    private Locator compareTotal;
-    private Locator comparisonLink;
-    private Locator compareProduct;
-    private Locator successNotification;
-    private Locator productComparison;
-    private Locator productVerify;
+    private final Locator specialOfferLink;
+    private final Locator siteMapLink;
+    private final Locator sitemapPageVerify;
+    private final Locator listViewLink;
+    private final Locator activeButton;
+    private final Locator gridView;
+    private final Locator compareTotal;
+    private final Locator comparisonLink;
+    private final Locator compareProduct;
+    private final Locator successNotification;
+    private final Locator productComparison;
+    private final Locator productVerify;
 
     public SpecialOfferPage(Page page){
         this.page=page;

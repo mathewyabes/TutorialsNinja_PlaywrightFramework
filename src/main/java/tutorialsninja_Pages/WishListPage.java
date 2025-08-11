@@ -10,16 +10,16 @@ import java.util.Properties;
 public class WishListPage {
     public Properties prop;
     public Page page;
-    private Locator addWishListButton;
-    private Locator successAlertMessage;
-    private Locator wishListLink;
-    private Locator productVerify;
-    private Locator dropdownLink;
-    private Locator showProduct;
-    private Locator product;
-    private Locator headerWishListButton;
-    private Locator removeProduct;
-    private Locator addToCart;
+    private final Locator addWishListButton;
+    private final Locator successAlertMessage;
+    private final Locator wishListLink;
+    private final Locator productVerify;
+    private final Locator dropdownLink;
+    private final Locator showProduct;
+    private final Locator product;
+    private final Locator headerWishListButton;
+    private final Locator removeProduct;
+    private final Locator addToCart;
 
     public WishListPage(Page page) {
         this.page = page;
