@@ -12,7 +12,7 @@ public class LogoutPage {
 
     public Properties prop;
     public Page page;
-//    public Locator emailTextField;
+    public Locator emailTextField;
 //    public Locator passwordTextField;
 //    public Locator loginButton;
     public Locator myAccountDropdown;
@@ -30,7 +30,7 @@ public class LogoutPage {
             e.printStackTrace();
         }
         this.page = page;
-//        this.emailTextField = page.locator("#input-email");
+        this.emailTextField = page.locator("#input-email");
 //        this.passwordTextField = page.locator("#input-password");
 //        this.loginButton = page.locator("//input[@value='Login']");
         this.myAccountDropdown = page.locator("//span[text()='My Account']");
