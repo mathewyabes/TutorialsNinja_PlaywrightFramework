@@ -11,6 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tutorialsninja_Pages.HomePage;
 import tutorialsninja_Pages.LoginPage;
+import tutorialsninja_Pages.LogoutPage;
 
 public class LogoutTest extends Base {
 
@@ -19,6 +20,7 @@ public class LogoutTest extends Base {
     public Page page;
     public HomePage homePage;
     public LoginPage loginPage;
+    public LogoutPage logoutPage;
 
     @BeforeMethod
     public void setup() {
@@ -26,9 +28,11 @@ public class LogoutTest extends Base {
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
         page = browser.newPage();
         homePage = new HomePage(page);
+        loginPage = new LoginPage(page);
         page.navigate(prop.getProperty("url"));
         homePage.clickMyAccount();
         homePage.clickLoginOption();
+        loginPage.validLogin();
     }
 
     @AfterMethod
@@ -39,25 +43,15 @@ public class LogoutTest extends Base {
 
     @Test(priority = 1)
     public void verifyLogoutUsingDropdown() {
-        page.locator("#input-email").fill(prop.getProperty("validUserEmail"));
-        page.locator("#input-password").fill(prop.getProperty("validPassword"));
-        page.locator("//input[@value='Login']").click();
-        page.locator("//span[text()='My Account']").click();
-        page.locator("(//a[text()='Logout'])[1]").click();
-        Assert.assertTrue(page.url().contains("logout"));
-        page.locator("text='Continue'").click();
+        logoutPage = new LogoutPage(page);
+        logoutPage.logoutUsingDropdown();
         softAssert.assertAll();
     }
 
     @Test(priority = 2)
-    public void verifyLogoutUsingRightColoumnOptions() {
-        page.locator("#input-email").fill(prop.getProperty("validUserEmail"));
-        page.locator("#input-password").fill(prop.getProperty("validPassword"));
-        page.locator("//input[@value='Login']").click();
-        page.locator("//span[text()='My Account']").click();
-        page.locator("(//a[text()='Logout'])[2]").click();
-        Assert.assertTrue(page.url().contains("logout"));
-        page.locator("text='Continue'").click();
+    public void verifyLogoutUsingRightColumnOptions() {
+        logoutPage = new LogoutPage(page);
+        logoutPage.logoutUsingRightColumnOption();
         softAssert.assertAll();
     }
 

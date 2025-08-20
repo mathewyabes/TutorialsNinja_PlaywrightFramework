@@ -3,7 +3,6 @@ package tutorialsninja_Pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
-import org.testng.Assert;
 
 import java.util.Properties;
 
